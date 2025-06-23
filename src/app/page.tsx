@@ -237,12 +237,12 @@ export default function Home() {
         <div className={styles.chatList} ref={chatListRef}>
           {fetching ? <div className={styles.emptyInbox}>Loading messages...</div> : null}
           {!fetching && messages.length === 0 && <div className={styles.emptyInbox}>No messages yet.</div>}
-          {messages.map((msg) => {
+          {[...messages].reverse().map((msg) => {
             const isSent = lastSent && msg.message?.text === lastSent;
             return (
               <div className={styles.chatMsg} key={msg._id} style={{ justifyContent: isSent ? 'flex-end' : 'flex-start' }}>
                 {!isSent && (
-                  <div className={styles.avatar} title={msg.message?.from?.username || 'Unknown'}>
+                  <div className={styles.avatar} title={msg.message?.from?.username || 'Mama'}>
                     {getAvatar(msg.message?.from?.username)}
                   </div>
                 )}
@@ -252,7 +252,7 @@ export default function Home() {
                   <div className={styles.msgMeta}>
                     {!isSent && (
                       <span className={styles.msgSender}>
-                        {msg.message?.from?.username ? `@${msg.message.from.username}` : 'Unknown'}
+                        {msg.message?.from?.username ? `@${msg.message.from.username}` : 'Mama'}
                       </span>
                     )}
                     <span className={styles.msgDate} title={msg.receivedAt}>{formatDate(msg.receivedAt)}</span>

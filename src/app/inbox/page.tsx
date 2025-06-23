@@ -2,9 +2,8 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import clientPromise from '@/lib/mongodb';
 import styles from '../page.module.css';
-import Link from 'next/link';
 import { ObjectId, Document } from 'mongodb';
-import { signOut } from 'next-auth/react';
+import InboxActions from './InboxActions';
 
 function formatDate(dateStr: string) {
   const date = new Date(dateStr);
@@ -55,10 +54,7 @@ export default async function InboxPage() {
             </div>
           ))}
         </div>
-        <div className={styles.inboxActions}>
-          <Link href="/" className={styles.inboxLink}>← Back to Home</Link>
-          <button onClick={() => signOut()} className={styles.inboxLink} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}>Logout</button>
-        </div>
+        <InboxActions />
       </div>
     </div>
   );

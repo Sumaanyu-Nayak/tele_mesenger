@@ -63,11 +63,11 @@ export async function POST(req: NextRequest) {
     });
     const data = await res.json();
 
-    // Store the sent message in MongoDB with fromWeb: true
+    // Store the sent message in MongoDB with fromWeb: true and username 'You'
     const client = await clientPromise;
     const db = client.db('telegram');
     await db.collection('messages').insertOne({
-      message: { text },
+      message: { text, from: { username: 'You' } },
       receivedAt: new Date(),
       fromWeb: true,
     });

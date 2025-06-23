@@ -247,11 +247,9 @@ export default function Home() {
                   {msg.message?.text || <span className={styles.msgFaded}>(no text)</span>}
                   {renderMedia(msg.media)}
                   <div className={styles.msgMeta}>
-                    {!isSent && (
-                      <span className={styles.msgSender}>
-                        {msg.message?.from?.username ? `@${msg.message.from.username}` : 'Mama'}
-                      </span>
-                    )}
+                    <span className={styles.msgSender}>
+                      {isSent ? 'You' : (msg.message?.from?.username ? `@${msg.message.from.username}` : 'Mama')}
+                    </span>
                     <span className={styles.msgDate} title={msg.receivedAt}>{formatDate(msg.receivedAt)}</span>
                   </div>
                 </div>

@@ -328,3 +328,101 @@ a.secondary {
   justify-content: space-between;
   margin-top: 18px;
 }
+
+.chatList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 24px 0 10px 0;
+  max-height: 320px;
+  overflow-y: auto;
+  background: #f7faff;
+  border-radius: 10px;
+  padding: 12px 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  scroll-behavior: smooth;
+}
+
+.chatMsg {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  animation: fadeIn 0.4s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e0e7ef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #007aff;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  border: 1.5px solid #e0e7ef;
+}
+
+.bubble {
+  background: #fff;
+  border-radius: 12px 12px 12px 4px;
+  padding: 10px 14px;
+  font-size: 1.08rem;
+  color: #222;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  max-width: 70%;
+  position: relative;
+  word-break: break-word;
+  transition: background 0.2s;
+}
+
+.bubble.sent {
+  background: #dbeafe;
+  border-radius: 12px 12px 4px 12px;
+  margin-left: auto;
+}
+
+.bubble.received {
+  background: #fff;
+  margin-right: auto;
+}
+
+.msgMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.92rem;
+  color: #888;
+  margin-top: 2px;
+}
+
+.msgSender {
+  font-weight: 600;
+  color: #007aff;
+}
+
+.msgDate {
+  font-size: 0.9em;
+  color: #888;
+  cursor: pointer;
+  border-bottom: 1px dotted #bbb;
+  transition: color 0.2s;
+}
+.msgDate:hover {
+  color: #222;
+}
+
+.pollingIndicator {
+  text-align: center;
+  color: #888;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  animation: fadeIn 0.4s;
+}

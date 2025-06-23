@@ -19,6 +19,7 @@ interface TelegramMessage {
     type: string;
     url: string;
   };
+  fromWeb?: boolean;
 }
 
 export default function Home() {
@@ -33,9 +34,6 @@ export default function Home() {
   const [filePreview, setFilePreview] = useState<string | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
-
-  // Store last sent message to differentiate sent/received
-  const [lastSent, setLastSent] = useState<string | null>(null);
 
   async function fetchMessages() {
     setFetching(true);
@@ -142,7 +140,6 @@ export default function Home() {
     setLoading(false);
     if (data.ok) {
       setStatus("Message sent!");
-      setLastSent(text);
       setText("");
       setFile(null);
       setFilePreview(null);
@@ -238,7 +235,7 @@ export default function Home() {
           {fetching ? <div className={styles.emptyInbox}>Loading messages...</div> : null}
           {!fetching && messages.length === 0 && <div className={styles.emptyInbox}>No messages yet.</div>}
           {[...messages].reverse().map((msg) => {
-            const isSent = lastSent && msg.message?.text === lastSent;
+            const isSent = msg.fromWeb;
             return (
               <div className={styles.chatMsg} key={msg._id} style={{ justifyContent: isSent ? 'flex-end' : 'flex-start' }}>
                 {!isSent && (

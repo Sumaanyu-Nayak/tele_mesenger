@@ -5,8 +5,8 @@ export async function GET() {
   try {
     const client = await clientPromise;
     const db = client.db('telegram');
-    const messages = await db.collection('daddu')
-      .find()
+    const messages = await db.collection('messages')
+      .find({ chatType: 'daddu' })
       .sort({ receivedAt: -1 })
       .limit(50)
       .toArray();
@@ -16,6 +16,7 @@ export async function GET() {
       receivedAt: msg.receivedAt instanceof Date ? msg.receivedAt.toISOString() : msg.receivedAt,
       message: msg.message,
       media: msg.media,
+      fromWeb: msg.fromWeb,
     }));
     return NextResponse.json({ ok: true, messages: formatted });
   } catch (error) {

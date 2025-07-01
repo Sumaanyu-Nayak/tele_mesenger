@@ -19,6 +19,7 @@ export async function POST(req: NextRequest) {
     const client = await clientPromise;
     const db = client.db('telegram');
     const messages = db.collection('messages');
+    const daddu = db.collection('daddu');
 
     let media: { type: string; url: string } | undefined;
     const msg = body.message;
@@ -46,8 +47,11 @@ export async function POST(req: NextRequest) {
     }
 
     // Store the incoming message, with media if present
-    await messages.insertOne({ ...body, receivedAt: new Date(), media });
-
+    if(body.message.from.first_name === 'Daddu') {
+      await daddu.insertOne({ ...body, receivedAt: new Date(), media });
+    } else {
+      await messages.insertOne({ ...body, receivedAt: new Date(), media });
+    }
     return NextResponse.json({ ok: true });
   } catch (error) {
     return NextResponse.json({ ok: false, error: (error as Error).message }, { status: 500 });

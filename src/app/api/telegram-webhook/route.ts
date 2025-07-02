@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const TELEGRAM_DADDU_CHAT_ID = process.env.TELEGRAM_DADDU_CHAT_ID;
 
 async function getTelegramFileUrl(fileId: string): Promise<string | null> {
   if (!TELEGRAM_BOT_TOKEN) return null;
@@ -24,10 +23,6 @@ export async function POST(req: NextRequest) {
 
     let media: { type: string; url: string } | undefined;
     const msg = body.message;
-    let chatType = 'default';
-    if (msg && msg.chat && TELEGRAM_DADDU_CHAT_ID && msg.chat.id?.toString() === TELEGRAM_DADDU_CHAT_ID) {
-      chatType = 'daddu';
-    }
     if (msg) {
       if (msg.photo && Array.isArray(msg.photo) && msg.photo.length > 0) {
         // Get the largest photo
@@ -51,12 +46,13 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Store the incoming message, with media if present, and chatType
-    if(body.message.from.first_name === 'Daddu') {
+    // Store the incoming message, with media if present
+    if(body.message.from.first_name === 'Manoj') {
       await daddu.insertOne({ ...body, receivedAt: new Date(), media });
-    } else {
-      await messages.insertOne({ ...body, receivedAt: new Date(), media, chatType });
+    } else if (body.message.from.first_name === 'Sagarika') {
+      await messages.insertOne({ ...body, receivedAt: new Date(), media });
     }
+
     return NextResponse.json({ ok: true });
   } catch (error) {
     return NextResponse.json({ ok: false, error: (error as Error).message }, { status: 500 });

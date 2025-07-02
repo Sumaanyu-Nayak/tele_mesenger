@@ -125,12 +125,12 @@ export default function Home() {
       const formData = new FormData();
       formData.append('text', text);
       formData.append('file', file);
-      res = await fetch('/api/send-message-daddu', {
+      res = await fetch('/api/send-messages-daddu', {
         method: 'POST',
         body: formData,
       });
     } else {
-      res = await fetch("/api/send-message-daddu", {
+      res = await fetch("/api/send-messages-daddu", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),

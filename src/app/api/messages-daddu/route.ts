@@ -5,8 +5,8 @@ export async function GET() {
   try {
     const client = await clientPromise;
     const db = client.db('telegram');
-    const messages = await db.collection('messages')
-      .find({ chatType: 'daddu' })
+    const messages = await db.collection('daddu')
+      .find()
       .sort({ receivedAt: -1 })
       .limit(50)
       .toArray();
